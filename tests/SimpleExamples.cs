@@ -8,7 +8,6 @@ using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using NUnit.Framework;
-using NUnit.Framework.Interfaces;
 
 namespace Reactive.Samples
 {
@@ -31,11 +30,10 @@ namespace Reactive.Samples
         [Test]
         public async Task ShouldPrintFromDefaultScheduler()
         {
-            using var _ = Observable.Range(3, 5)
+            using var subscription = Observable.Range(3, 5)
                 .ObserveOn(Scheduler.Default)
                 .Subscribe(i =>
                     TestContext.Out.WriteLine($"input: {i}, thread: {Thread.CurrentThread.ManagedThreadId}"));
-            await Task.Delay(100);
         }
 
         [Test]
@@ -62,12 +60,12 @@ namespace Reactive.Samples
 
             using var subscription1 = observable.Subscribe(TestContext.WriteLine);
             using var subscription2 = observable.Subscribe(TestContext.WriteLine);
+            using var subscription3 = observable.Subscribe(TestContext.WriteLine);
         }
 
         [Test]
         public void ShouldMulticast()
         {
-            IAsyncEnumerable<int> k;
             var observable = Observable.Return<Func<int>>(() => new Random().Next()).Select(f => f())
                 .Publish();
 
@@ -80,9 +78,8 @@ namespace Reactive.Samples
         public void ShouldReplaySingleValue()
         {
             var observable = Observable.Return<Func<int>>(() => new Random().Next()).Select(f => f())
-                .Replay();
+                .Replay().RefCount();
 
-            using var connection1 = observable.Connect();
             using var subscription1 = observable.Subscribe(TestContext.WriteLine);
             using var subscription2 = observable.Subscribe(TestContext.WriteLine);
         }
@@ -132,7 +129,7 @@ namespace Reactive.Samples
                 return default;
             }
 
-            await Observable.Interval(TimeSpan.FromMilliseconds(60))
+           var _ =  await Observable.Interval(TimeSpan.FromMilliseconds(60))
                 .Take(10)
                 .Select(i =>
                 {
@@ -155,10 +152,11 @@ namespace Reactive.Samples
         [Test]
         public async Task ShouldThrottle()
         {
-            using var subscription1 = Observable.Interval(TimeSpan.FromMilliseconds(10))
+            Observable.Interval(TimeSpan.FromMilliseconds(10))
                 .Take(100)
-                .Sample(TimeSpan.FromMilliseconds(50))
-                .Subscribe(i => TestContext.WriteLine(i));
+                .Window(TimeSpan.FromMilliseconds(50))
+                .Select(ob => ob.Subscribe(TestContext.WriteLine))
+                .Subscribe(s=>TestContext.WriteLine(s));
 
             await Task.Delay(1000);
         }

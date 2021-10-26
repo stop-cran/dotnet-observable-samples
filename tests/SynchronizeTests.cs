@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Reactive.Concurrency;
 using System.Reactive.Linq;
 using System.Threading;
 using NUnit.Framework;
@@ -30,12 +31,12 @@ namespace Reactive.Samples
                 test(i);
             });
 
-            using var _ = observable.Synchronize().Subscribe(i =>
+            using var _ = observable.ObserveOn(Scheduler.Default).Subscribe(i =>
             {
                 TestContext.Out.WriteLine($"Begin processing {i}...");
-                Interlocked.Exchange(ref x, i).ShouldBe(0);
+                Interlocked.Exchange(ref x, i);
                 Thread.Sleep(200);
-                Interlocked.Exchange(ref x, 0).ShouldBe(i);
+                Interlocked.Exchange(ref x, 0);
                 TestContext.Out.WriteLine($"End processing {i}...");
             });
 
@@ -46,6 +47,8 @@ namespace Reactive.Samples
             
             foreach (var thread in threads)
                 thread.Join();
+            
+            Thread.Sleep(2000);
         }
     }
 }

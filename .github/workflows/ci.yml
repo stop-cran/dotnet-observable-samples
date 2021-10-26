@@ -19,6 +19,6 @@ jobs:
       with:
         dotnet-version: 5.0.101
     - name: Build with dotnet
-      run: dotnet build
+      run: cd tests ; dotnet build
     - name: Test with dotnet
-      run: dotnet test --no-build
+      run: cd tests ; dotnet test --no-build

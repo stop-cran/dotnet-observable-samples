@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reactive.Samples", "Reactive.Samples\Reactive.Samples.csproj", "{6E70030B-CFC6-4B7C-9B00-E00FB6BCEEA4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reactive.Samples", "tests\Reactive.Samples.csproj", "{6E70030B-CFC6-4B7C-9B00-E00FB6BCEEA4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfSample", "src\WpfSample.csproj", "{2C7835C9-496B-4B66-BA8A-AB3F5DF5375E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -12,5 +14,9 @@ Global
 		{6E70030B-CFC6-4B7C-9B00-E00FB6BCEEA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6E70030B-CFC6-4B7C-9B00-E00FB6BCEEA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6E70030B-CFC6-4B7C-9B00-E00FB6BCEEA4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C7835C9-496B-4B66-BA8A-AB3F5DF5375E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C7835C9-496B-4B66-BA8A-AB3F5DF5375E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C7835C9-496B-4B66-BA8A-AB3F5DF5375E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C7835C9-496B-4B66-BA8A-AB3F5DF5375E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

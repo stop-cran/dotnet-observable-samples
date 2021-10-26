@@ -1,0 +1,28 @@
+﻿<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:local="clr-namespace:WpfSample"
+        Title="Observable test">
+    <Window.DataContext>
+        <local:MainViewModel />
+    </Window.DataContext>
+    <StackPanel Margin="10">
+        <TextBlock Margin="0 0 0 10" FontWeight="Bold">Namespace:</TextBlock>
+        <TextBox Text="{Binding Namespace, UpdateSourceTrigger=PropertyChanged}" />
+        
+        <TextBlock Margin="0 30 0 10" FontWeight="Bold">Operations count:</TextBlock>
+        <TextBlock Text="{Binding OperationsCount}" />
+        
+        <TextBlock Margin="0 30 0 10" FontWeight="Bold">Parsed namespace:</TextBlock>
+        <ItemsControl ItemsSource="{Binding ParsedNamespace}" />
+        
+        <TextBlock Margin="0 30 0 0" FontStyle="Italic">
+            <TextBlock.Visibility>
+                <Binding Path="IsLoading">
+                    <Binding.Converter>
+                        <BooleanToVisibilityConverter />
+                    </Binding.Converter>
+                </Binding>
+            </TextBlock.Visibility>
+            (Loading...)
+        </TextBlock>
+    </StackPanel>
+</Window>
