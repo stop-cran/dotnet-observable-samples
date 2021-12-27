@@ -31,7 +31,7 @@ namespace Reactive.Samples
                 test(i);
             });
 
-            using var _ = observable.ObserveOn(Scheduler.Default).Subscribe(i =>
+            using var _ = observable.Synchronize().Subscribe(i =>
             {
                 TestContext.Out.WriteLine($"Begin processing {i}...");
                 Interlocked.Exchange(ref x, i);
